@@ -1,0 +1,613 @@
+/* Custom Styles for Balatro Calculator */
+
+:root {
+    --primary-color: #6f42c1;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --balatro-bg: #1a1a2e;
+    --balatro-surface: #16213e;
+    --balatro-text: #eee6ce;
+    --balatro-accent: #ff6b35;
+    --balatro-purple: #8e44ad;
+}
+
+/* CRT Effect Base */
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.95;
+    }
+}
+
+body {
+    font-family: 'Orbitron', 'JetBrains Mono', monospace;
+    background: var(--balatro-bg);
+    min-height: 100vh;
+    background-attachment: fixed;
+    color: var(--balatro-text);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* CRT Screen Effect */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 0, 0.03) 2px,
+            rgba(0, 255, 0, 0.03) 4px);
+    pointer-events: none;
+    z-index: 1000;
+    animation: flicker 0.15s infinite linear;
+}
+
+/* CRT Glow Effect */
+body::after {
+    content: '';
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(ellipse at center,
+            transparent 40%,
+            rgba(0, 20, 40, 0.2) 100%);
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* Navigation */
+.navbar {
+    background: var(--balatro-surface) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid var(--balatro-accent);
+    position: relative;
+    z-index: 1001;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    color: var(--balatro-accent) !important;
+    font-family: 'Orbitron', monospace;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* Card Enhancements */
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color), #8b5cf6) !important;
+}
+
+/* Hand Configuration Cards */
+.hand-config {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.hand-config:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hand-name {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.hand-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    display: block;
+    text-align: center;
+}
+
+/* Form Controls */
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+}
+
+/* Results Styling */
+.result-card {
+    margin-bottom: 20px;
+    border-left: 5px solid;
+    transition: all 0.3s ease;
+}
+
+.result-card.rank-1 {
+    border-left-color: #ffd700;
+    background: linear-gradient(135deg, #fff9c4, #fff);
+}
+
+.result-card.rank-2 {
+    border-left-color: #c0c0c0;
+    background: linear-gradient(135deg, #f8f9fa, #fff);
+}
+
+.result-card.rank-3 {
+    border-left-color: #cd7f32;
+    background: linear-gradient(135deg, #ffeaa7, #fff);
+}
+
+.result-card.rank-other {
+    border-left-color: #6c757d;
+    background: linear-gradient(135deg, #f1f3f4, #fff);
+}
+
+.rank-badge {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.rank-1 .rank-badge {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+}
+
+.rank-2 .rank-badge {
+    background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+    color: #333;
+}
+
+.rank-3 .rank-badge {
+    background: linear-gradient(135deg, #cd7f32, #d4a574);
+    color: white;
+}
+
+.rank-other .rank-badge {
+    background: linear-gradient(135deg, #6c757d, #9ca3af);
+    color: white;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Section Management */
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: fadeInUp 0.5s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .rank-badge {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        margin-right: 15px;
+    }
+
+    .hand-config {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+/* Poker Suit Colors */
+.text-spades,
+.text-clubs {
+    color: #333 !important;
+}
+
+.text-hearts,
+.text-diamonds {
+    color: #dc3545 !important;
+}
+
+/* Strategy Recommendations */
+.strategy-tip {
+    background: linear-gradient(135deg, #d1ecf1, #b8daff);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid var(--info-color);
+}
+
+.strategy-tip .tip-icon {
+    font-size: 1.5rem;
+    color: var(--info-color);
+}
+
+/* Loading States */
+.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a2d91;
+}
+
+/* Balatro-style interface */
+.balatro-hands-container {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border-radius: 15px;
+    padding: 20px;
+    border: 3px solid #555;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.balatro-hand-row {
+    margin-bottom: 8px;
+}
+
+.balatro-hand-container {
+    display: flex;
+    align-items: center;
+    background: var(--balatro-surface);
+    border: 2px solid var(--balatro-purple);
+    border-radius: 15px;
+    padding: 12px;
+    min-height: 65px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+    font-family: 'Orbitron', monospace;
+    position: relative;
+}
+
+.balatro-hand-container:hover {
+    border-color: var(--balatro-accent);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    background: var(--balatro-surface);
+    transform: translateY(-2px);
+}
+
+.hand-level {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 2px solid #adb5bd;
+    border-radius: 20px;
+    padding: 4px 8px;
+    margin-right: 15px;
+    min-width: 115px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    justify-content: center;
+}
+
+.level-btn {
+    background: rgba(73, 80, 87, 0.2);
+    border: none;
+    color: #495057;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all 0.2s;
+    z-index: 10;
+    position: relative;
+    user-select: none;
+}
+
+.level-btn:hover {
+    background: rgba(111, 66, 193, 0.3);
+    color: #6f42c1;
+    transform: scale(1.1);
+}
+
+.level-btn:active {
+    transform: scale(0.9);
+}
+
+.level-prefix {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #495057;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+    margin: 0 2px;
+}
+
+.level-input {
+    background: #ffffff !important;
+    border: 2px solid #495057 !important;
+    border-radius: 4px;
+    color: #212529 !important;
+    font-weight: bold;
+    font-size: 0.9rem;
+    width: 35px;
+    height: 22px;
+    text-align: center;
+    outline: none;
+    margin: 0 1px;
+}
+
+.level-input:focus {
+    background: rgba(111, 66, 193, 0.2);
+    border-color: #6f42c1;
+    box-shadow: 0 0 5px rgba(111, 66, 193, 0.3);
+}
+
+.level-text {
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #495057;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+.hand-name-section {
+    flex: 1;
+    padding: 0 15px;
+}
+
+.hand-name-text {
+    color: var(--balatro-text);
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 0.5px;
+}
+
+.hand-values {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 15px;
+}
+
+.value-pill {
+    display: flex;
+    align-items: center;
+    border-radius: 25px;
+    border: 2px solid;
+    overflow: hidden;
+    height: 32px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.blue-pill {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-color: #1f4e79;
+}
+
+.red-pill {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-color: #8b2a1f;
+}
+
+.pill-btn {
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.pill-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: scale(1.1);
+}
+
+.pill-btn:active {
+    transform: scale(0.95);
+}
+
+.pill-input {
+    background: transparent;
+    border: none;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    width: 45px;
+    height: 28px;
+    outline: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.pill-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+.multiplier-x {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin: 0 8px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.hand-result {
+    background: linear-gradient(135deg, var(--balatro-accent), #ff8c42);
+    border: 2px solid #cc4a1a;
+    border-radius: 20px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 80px;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+    font-family: 'Orbitron', monospace;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.result-symbol {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.result-value {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+    letter-spacing: 0.5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .balatro-hand-container {
+        flex-wrap: wrap;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .hand-level {
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    .hand-name-section {
+        padding: 0 10px;
+        margin-bottom: 5px;
+    }
+
+    .hand-values {
+        margin-right: 10px;
+        margin-bottom: 5px;
+    }
+
+    .pill-input {
+        width: 35px;
+    }
+}
+
+@media (max-width: 576px) {
+    .balatro-hand-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .hand-level,
+    .hand-name-section,
+    .hand-values,
+    .hand-result {
+        margin: 0;
+        text-align: center;
+    }
+
+    .hand-values {
+        justify-content: center;
+    }
+}

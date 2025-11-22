@@ -1,0 +1,40 @@
+# Configuración para GitHub Pages
+baseurl: ""
+url: "https://tu-usuario.github.io/balatro-calculator"
+
+# Configuración del sitio
+title: "Calculadora Balatro"
+description: "Calculadora de manos de poker para Balatro - Analiza el poder de tus manos"
+author: "Tu Nombre"
+
+# Configuración de Jekyll
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+# Archivos a incluir
+include:
+  - _pages
+  - assets
+
+# Archivos a excluir
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .bundle
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+
+# Configuración de markdown
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+# Configuración de colecciones
+collections_dir: collections
