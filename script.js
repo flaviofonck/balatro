@@ -13,7 +13,7 @@ class BalatroPowerCalculator {
             'high-card': { name: 'Carta Más Alta', baseValue: 5, multiplier: 1, icon: 'bi-star-fill', color: 'text-muted' }
         };
 
-        this.currentHands = { ...this.defaultHands };
+        this.currentHands = JSON.parse(JSON.stringify(this.defaultHands)); // Deep copy
         this.init();
     }
 
@@ -109,18 +109,28 @@ class BalatroPowerCalculator {
     updateHandCalculation(key) {
         const baseValue = parseInt(document.getElementById(`base-${key}`).value) || 0;
         const multiplier = parseFloat(document.getElementById(`mult-${key}`).value) || 0;
-        const level = parseInt(document.getElementById(`level-${key}`).value) || 1;
+
+        console.log(`🔄 updateHandCalculation(${key}):`, {
+            chips: baseValue,
+            mult: multiplier
+        });
 
         this.currentHands[key].baseValue = baseValue;
         this.currentHands[key].multiplier = multiplier;
 
-        // Calculate the hand power with current values
+        // Calcular poder total directamente (los valores ya incluyen el escalado de nivel)
         const total = this.calculateHandPower(baseValue, multiplier);
+
+        console.log(`💫 Final calculation for ${key}:`, {
+            formula: `${baseValue} × ${multiplier} = ${total}`,
+            total: total
+        });
 
         // Update result display 
         const resultElement = document.getElementById(`result-${key}`);
         if (resultElement) {
             resultElement.textContent = this.formatNumber(total);
+            console.log(`📱 Updated result display for ${key}: ${this.formatNumber(total)}`);
         }
 
         // Update the full ranking
@@ -142,6 +152,8 @@ class BalatroPowerCalculator {
         Object.entries(this.currentHands).forEach(([key, hand]) => {
             const baseValue = parseInt(document.getElementById(`base-${key}`)?.value) || hand.baseValue;
             const multiplier = parseFloat(document.getElementById(`mult-${key}`)?.value) || hand.multiplier;
+
+            // Los valores en los campos ya incluyen el escalado de nivel
             const total = this.calculateHandPower(baseValue, multiplier);
 
             // Update result display in each row
@@ -354,87 +366,144 @@ class BalatroPowerCalculator {
         const level = parseInt(document.getElementById(`level-${key}`).value) || 1;
         const baseHand = this.defaultHands[key];
 
-        if (level === 1) {
-            // Level 1: valores originales
-            document.getElementById(`base-${key}`).value = baseHand.baseValue;
-            document.getElementById(`mult-${key}`).value = baseHand.multiplier;
-        } else {
-            // Escalado específico para cada mano según Balatro
-            const handScaling = this.getHandScaling(key, level);
+        console.log(`🔄 updateHandLevel(${key}):`, {
+            level: level,
+            defaultValues: { chips: baseHand.baseValue, mult: baseHand.multiplier }
+        });
 
-            document.getElementById(`base-${key}`).value = handScaling.base;
-            document.getElementById(`mult-${key}`).value = handScaling.mult;
-        }
+        // Calcular los valores escalados según el nivel
+        const scaling = this.getHandScaling(key, level, true); // true = usar valores base por defecto
 
-        // Update the calculator
+        console.log(`📈 Scaling result for ${key} level ${level}:`, scaling);
+
+        // Actualizar los campos de entrada con los valores escalados
+        document.getElementById(`base-${key}`).value = scaling.base;
+        document.getElementById(`mult-${key}`).value = Number.isInteger(scaling.mult) ? scaling.mult.toString() : scaling.mult.toFixed(1);
+
+        console.log(`📝 Updated UI fields for ${key}:`, {
+            chips: scaling.base,
+            mult: Number.isInteger(scaling.mult) ? scaling.mult.toString() : scaling.mult.toFixed(1)
+        });
+
+        // Actualizar el cálculo
         this.updateHandCalculation(key);
     }
 
-    getHandScaling(key, level) {
-        const baseHand = this.defaultHands[key];
-        let newBase = baseHand.baseValue;
-        let newMult = baseHand.multiplier;
+    getHandScaling(key, level, useDefaults = false) {
+        console.log(`🧮 getHandScaling(${key}, ${level}, useDefaults: ${useDefaults})`);
+
+        // Obtener los valores base - SIEMPRE usar defaults reales para escalado de nivel
+        let currentChips, currentMult;
+
+        if (useDefaults) {
+            // Para escalado de nivel, SIEMPRE usar los valores originales del juego
+            currentChips = this.defaultHands[key].baseValue;
+            currentMult = this.defaultHands[key].multiplier;
+        } else {
+            // Para cálculos normales, usar valores actuales de los campos
+            currentChips = parseInt(document.getElementById(`base-${key}`)?.value) || this.defaultHands[key].baseValue;
+            currentMult = parseFloat(document.getElementById(`mult-${key}`)?.value) || this.defaultHands[key].multiplier;
+        }
+
+        console.log(`📊 Base values for ${key}:`, {
+            chips: currentChips,
+            mult: currentMult,
+            source: useDefaults ? 'true defaults from game' : 'UI fields',
+            originalDefaults: { chips: this.defaultHands[key].baseValue, mult: this.defaultHands[key].multiplier }
+        });
+
+        let finalChips = currentChips;
+        let finalMult = currentMult;
 
         // Escalado oficial de Balatro basado en Planet Cards
         const levelUps = level - 1; // Cuántas veces se ha subido de nivel
 
+        console.log(`⬆️ Level ups for ${key}: ${levelUps} (level ${level} - 1)`);
+
+        let chipBonus = 0;
+        let multBonus = 0;
+
         switch (key) {
             case 'high-card':
-                // Pluto: +1 Mult y +10 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 10);
-                newMult = baseHand.multiplier + (levelUps * 1);
+                // Pluto: +10 Chips y +1 Mult por nivel
+                chipBonus = levelUps * 10;
+                multBonus = levelUps * 1;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'pair':
-                // Mercury: +1 Mult y +15 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 15);
-                newMult = baseHand.multiplier + (levelUps * 1);
+                // Mercury: +15 Chips y +1 Mult por nivel
+                chipBonus = levelUps * 15;
+                multBonus = levelUps * 1;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'two-pair':
-                // Uranus: +1 Mult y +20 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 20);
-                newMult = baseHand.multiplier + (levelUps * 1);
+                // Saturn: +20 Chips y +1 Mult por nivel
+                chipBonus = levelUps * 20;
+                multBonus = levelUps * 1;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'three-kind':
-                // Venus: +2 Mult y +20 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 20);
-                newMult = baseHand.multiplier + (levelUps * 2);
+                // Earth: +20 Chips y +2 Mult por nivel
+                chipBonus = levelUps * 20;
+                multBonus = levelUps * 2;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'straight':
-                // Saturn: +3 Mult y +30 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 30);
-                newMult = baseHand.multiplier + (levelUps * 3);
+                // Uranus: +30 Chips y +3 Mult por nivel
+                chipBonus = levelUps * 30;
+                multBonus = levelUps * 3;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'flush':
-                // Jupiter: +2 Mult y +15 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 15);
-                newMult = baseHand.multiplier + (levelUps * 2);
+                // Neptune: +15 Chips y +2 Mult por nivel
+                chipBonus = levelUps * 15;
+                multBonus = levelUps * 2;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'full-house':
-                // Earth: +2 Mult y +25 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 25);
-                newMult = baseHand.multiplier + (levelUps * 2);
+                // Venus: +25 Chips y +2 Mult por nivel
+                chipBonus = levelUps * 25;
+                multBonus = levelUps * 2;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'four-kind':
-                // Mars: +3 Mult y +30 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 30);
-                newMult = baseHand.multiplier + (levelUps * 3);
+                // Ceres: +30 Chips y +3 Mult por nivel
+                chipBonus = levelUps * 30;
+                multBonus = levelUps * 3;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
 
             case 'straight-flush':
-                // Neptune: +4 Mult y +40 Chips por nivel
-                newBase = baseHand.baseValue + (levelUps * 40);
-                newMult = baseHand.multiplier + (levelUps * 4);
+                // Eris: +40 Chips y +3 Mult por nivel
+                chipBonus = levelUps * 40;
+                multBonus = levelUps * 3;
+                finalChips = currentChips + chipBonus;
+                finalMult = currentMult + multBonus;
                 break;
         }
 
-        return { base: newBase, mult: newMult };
+        console.log(`🚀 Planet Card bonus for ${key}:`, {
+            chipBonus: chipBonus,
+            multBonus: multBonus,
+            calculation: `${currentChips} + ${chipBonus} = ${finalChips} chips, ${currentMult} + ${multBonus} = ${finalMult} mult`
+        });
+
+        return { base: finalChips, mult: finalMult };
     }
 
     adjustLevel(handKey, change) {
@@ -443,6 +512,14 @@ class BalatroPowerCalculator {
             const currentLevel = parseInt(levelInput.value) || 1;
             const newLevel = Math.max(1, Math.min(15, currentLevel + change));
             levelInput.value = newLevel;
+
+            console.log(`🎚️ adjustLevel(${handKey}):`, {
+                oldLevel: currentLevel,
+                change: change,
+                newLevel: newLevel,
+                constrained: newLevel !== currentLevel + change
+            });
+
             this.updateHandLevel(handKey);
         }
     }
@@ -453,7 +530,21 @@ class BalatroPowerCalculator {
             const currentValue = parseFloat(input.value) || 0;
             const step = inputId.includes('mult') ? 0.1 : 1;
             const newValue = Math.max(0, currentValue + change);
-            input.value = inputId.includes('mult') ? newValue.toFixed(1) : Math.round(newValue);
+
+            if (inputId.includes('mult')) {
+                // Para multiplicadores, mostrar decimales solo si es necesario
+                input.value = Number.isInteger(newValue) ? newValue.toString() : newValue.toFixed(1);
+            } else {
+                // Para chips, siempre enteros
+                input.value = Math.round(newValue);
+            }
+
+            console.log(`🎛️ adjustValue(${inputId}):`, {
+                oldValue: currentValue,
+                change: change,
+                newValue: input.value,
+                type: inputId.includes('mult') ? 'multiplier' : 'chips'
+            });
 
             // Trigger calculation update
             const handKey = inputId.replace(/^(base|mult)-/, '');

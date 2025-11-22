@@ -1,26 +1,35 @@
 # 🃏 Calculadora Balatro
 
-Una aplicación web moderna para calcular y analizar el poder de las manos de poker en Balatro, desarrollada con Bootstrap 5.3.3 y JavaScript vanilla.
+Una aplicación web moderna que replica la interfaz auténtica de Balatro para calcular y analizar el poder de las manos de poker. Desarrollada con Bootstrap 5.3.3 y JavaScript vanilla, incluye efectos CRT y tipografía del juego original.
 
 ## ✨ Características
 
 ### 🎯 Calculadora de Manos de Poker
 - **Análisis en tiempo real** de 9 tipos de manos de poker
-- **Configuración personalizable** de valores base y multiplicadores
+- **Valores oficiales de Balatro** basados en Planet Cards del juego
+- **Sistema de niveles** con escalado auténtico por tipo de mano
+- **Resultados inmediatos** mostrados en campos naranjas como en el juego
 - **Ranking automático** ordenado por poder total
-- **Recomendaciones estratégicas** basadas en los resultados
 
-### 📊 Análisis de Datos
-- Cálculo instantáneo: `Valor Base × Multiplicador = Poder Total`
-- Comparación visual con rankings y badges
-- Sistema de colores para identificar rápidamente las mejores manos
-- Análisis de brechas de poder entre manos
+### 🎨 Interfaz Auténtica de Balatro
+- **Tipografía oficial**: Fuentes Orbitron y JetBrains Mono
+- **Efectos CRT**: Líneas de escaneo, parpadeo y resplandor
+- **Colores del juego**: Paleta oscura con acentos naranjas y púrpuras
+- **Layout horizontal**: Filas que replican exactamente la interfaz del juego
+- **Animaciones suaves**: Efectos hover y transiciones como en Balatro
 
-### 🎨 Interfaz Moderna
-- **Diseño responsivo** para móviles, tablets y escritorio
-- **Bootstrap 5.3.3** con componentes modernos
-- **Animaciones suaves** y transiciones CSS
-- **Iconos Bootstrap** para mejor UX
+### 📊 Sistema de Cálculo Avanzado
+- Cálculo instantáneo: `Chips × Multiplicador = Poder Total`
+- **Sistema de niveles**: 15 niveles por mano con escalado oficial
+- **Valores Planet Cards**: Bonificaciones exactas del juego original
+- **Formateo de números**: K para miles, M para millones
+- **Actualización en tiempo real** del ranking y recomendaciones
+
+### � Experiencia de Usuario
+- **Botones de ajuste**: +/- para modificar valores fácilmente  
+- **Campos de entrada**: Inputs directos para valores personalizados
+- **Responsive design**: Adaptado para móviles, tablets y escritorio
+- **Atajos de teclado**: Ctrl+R para recalcular, Ctrl+Enter para actualizar
 
 ## 🚀 Configuración para GitHub Pages
 
@@ -44,28 +53,51 @@ Tu calculadora estará disponible en:
 https://tu-usuario.github.io/nombre-del-repo
 ```
 
-## 🎮 Manos de Poker por Defecto
+## 🎮 Manos de Poker Oficiales de Balatro
 
-| Mano                 | Valor Base | Mult | Total    |
-| -------------------- | ---------- | ---- | -------- |
-| **Color**            | 95         | x12  | **1140** |
-| **Escalera**         | 90         | x10  | **900**  |
-| **Tercia**           | 90         | x9   | **810**  |
-| **Escalera Corrida** | 100        | x8   | **800**  |
-| **Full House**       | 80         | x8   | **640**  |
-| **Póker**            | 60         | x7   | **420**  |
-| **Carta Más Alta**   | 45         | x5   | **225**  |
-| **Par**              | 25         | x3   | **75**   |
-| **Doble Par**        | 20         | x2   | **40**   |
+Valores base implementados según los Planet Cards oficiales del juego:
+
+| Mano                 | Chips Base | Multiplicador | Total    | Planet Card |
+| -------------------- | ---------- | ------------- | -------- | ----------- |
+| **Escalera Corrida** | 100        | x8            | **800**  | Eris        |
+| **Póker**            | 60         | x7            | **420**  | Ceres       |
+| **Full House**       | 40         | x4            | **160**  | Venus       |
+| **Color**            | 35         | x4            | **140**  | Neptune     |
+| **Escalera**         | 30         | x4            | **120**  | Uranus      |
+| **Tercia**           | 30         | x3            | **90**   | Earth       |
+| **Doble Par**        | 20         | x2            | **40**   | Saturn      |
+| **Par**              | 10         | x2            | **20**   | Mercury     |
+| **Carta Más Alta**   | 5          | x1            | **5**    | Pluto       |
+
+### Sistema de Niveles
+
+Cada mano puede subir hasta **Nivel 15** con escalado específico:
+
+- **Par**: +15 Chips, +1 Mult por nivel (Mercury)
+- **Doble Par**: +20 Chips, +1 Mult por nivel (Saturn) 
+- **Tercia**: +20 Chips, +2 Mult por nivel (Earth)
+- **Escalera**: +30 Chips, +3 Mult por nivel (Uranus)
+- **Color**: +15 Chips, +2 Mult por nivel (Neptune)
+- **Full House**: +25 Chips, +2 Mult por nivel (Venus)
+- **Póker**: +30 Chips, +3 Mult por nivel (Ceres)
+- **Escalera Corrida**: +40 Chips, +3 Mult por nivel (Eris)
+- **Carta Más Alta**: +10 Chips, +1 Mult por nivel (Pluto)
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **HTML5** - Estructura semántica
-- **CSS3** - Estilos modernos con gradientes y animaciones
-- **JavaScript ES6+** - Lógica de la aplicación
+- **HTML5** - Estructura semántica moderna
+- **CSS3** - Efectos CRT, animaciones y gradientes avanzados
+- **JavaScript ES6+** - Lógica de calculadora con clases y módulos
 - **Bootstrap 5.3.3** - Framework CSS responsivo
 - **Bootstrap Icons** - Iconografía consistente
-- **Google Fonts (Roboto)** - Tipografía moderna
+- **Google Fonts**: 
+  - **Orbitron** - Tipografía futurista principal de Balatro
+  - **JetBrains Mono** - Fuente monoespaciada para números
+- **Efectos Visuales**:
+  - Líneas de escaneo CRT animadas
+  - Efectos de resplandor y parpadeo
+  - Backdrop blur y sombras profundas
+  - Transiciones suaves y hover effects
 
 ## 📱 Características Responsivas
 
@@ -75,40 +107,56 @@ https://tu-usuario.github.io/nombre-del-repo
 
 ## 🎯 Funcionalidades Futuras
 
-- [ ] **Analizador de Jokers** - Calcular sinergias entre jokers y manos
-- [ ] **Guía de Estrategia** - Tips y consejos avanzados
-- [ ] **Simulador de Rondas** - Simular diferentes escenarios de juego
-- [ ] **Historial de Configuraciones** - Guardar y cargar setups personalizados
-- [ ] **Modo Oscuro** - Tema alternativo para mejor experiencia nocturna
-- [ ] **Exportar Resultados** - Compartir análisis como imagen o PDF
-
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Si tienes ideas para mejorar la calculadora:
-
-1. Fork el repositorio
-2. Crea una branch para tu feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'Add nueva funcionalidad'`)
-4. Push a la branch (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
+- [ ] **Calculadora de Jokers** - Integración de efectos de jokers con las manos
+- [ ] **Simulador de Blinds** - Cálculo de score necesario por nivel
+- [ ] **Guía de Planet Cards** - Información detallada de cada carta planeta
+- [ ] **Analizador de Builds** - Evaluación de sinergias entre jokers y manos
+- [ ] **Modo Endless** - Cálculo de scaling para niveles infinitos
+- [ ] **Historial de Partidas** - Guardar y comparar configuraciones
+- [ ] **Exportar/Importar** - Compartir builds como código o imagen
+- [ ] **Calculadora de Ante** - Progresión de dificultad por nivel
+- [ ] **Base de Datos de Cartas** - Catálogo completo con efectos
 
 ## 📋 Estructura del Proyecto
 
 ```
 balatro-calculator/
-├── index.html          # Página principal
-├── styles.css          # Estilos personalizados
-├── script.js           # Lógica de la aplicación
-└── README.md           # Este archivo
+├── index.html           # Página principal con layout auténtico
+├── styles.css           # Estilos CRT y paleta de Balatro  
+├── script.js            # Calculadora con valores oficiales
+├── utils.js             # Utilidades de exportación/importación
+├── README.md            # Documentación completa
+├── DEPLOYMENT.md        # Guía de despliegue en GitHub Pages
+└── _config.yml          # Configuración de Jekyll
 ```
 
 ## 🎲 Uso de la Aplicación
 
+### Interfaz Principal
+
+La calculadora replica fielmente la interfaz de Balatro:
+
+- **Filas horizontales**: Cada mano se muestra en una fila como en el juego
+- **Controles de nivel**: Botones -/+ y campo de nivel (Nvl. 1-15)
+- **Pills azules y rojas**: Chips (azul) y multiplicador (rojo) editables
+- **Resultado naranja**: Valor calculado inmediato (chips × mult)
+- **Ranking automático**: Panel lateral con orden por poder total
+
 ### Cálculo Básico
-1. **Ajusta valores**: Modifica los valores base y multiplicadores de cada mano
-2. **Ve resultados en tiempo real**: Los totales se actualizan automáticamente
-3. **Analiza el ranking**: Las manos se ordenan por poder total
-4. **Lee las recomendaciones**: Obtén consejos estratégicos basados en tus configuraciones
+
+1. **Ajusta valores**: Modifica chips y multiplicadores de cada mano
+2. **Cambia niveles**: Usa Planet Cards para escalar manos específicas  
+3. **Ve resultados**: Los valores naranjas muestran el poder calculado
+4. **Analiza ranking**: Las mejores manos aparecen primero en el panel
+5. **Lee recomendaciones**: Obtén consejos estratégicos automáticos
+
+### Características Especiales
+
+- **Valores oficiales**: Datos exactos del código fuente de Balatro
+- **Escalado auténtico**: Planet Cards implementados correctamente
+- **Estilo CRT**: Efectos visuales que recrean la pantalla del juego
+- **Responsive**: Funciona perfectamente en móviles y tablets
+- **Tiempo real**: Todo se actualiza instantáneamente al cambiar valores
 
 ### Atajos de Teclado
 - `Ctrl/Cmd + R`: Recalcular todos los resultados
