@@ -366,34 +366,40 @@ footer {
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     border: 2px solid #adb5bd;
     border-radius: 20px;
-    padding: 4px 8px;
+    padding: 6px 10px;
     margin-right: 15px;
-    min-width: 115px;
+    min-width: 135px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
-    gap: 3px;
+    gap: 4px;
     justify-content: center;
+    /* Mejor espacio para botones más grandes */
+    min-height: 40px;
 }
 
 .level-btn {
     background: rgba(73, 80, 87, 0.2);
     border: none;
     color: #495057;
-    width: 18px;
-    height: 18px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 14px;
     transition: all 0.2s;
     z-index: 10;
     position: relative;
     user-select: none;
+    /* Mejor area táctil para móviles */
+    min-width: 28px;
+    min-height: 28px;
+    padding: 4px;
 }
 
 .level-btn:hover {
@@ -426,10 +432,11 @@ footer {
     text-align: center;
     outline: none;
     margin: 0 1px;
+    cursor: default;
 }
 
 .level-input:focus {
-    background: rgba(111, 66, 193, 0.2);
+    background: #ffffff !important;
     border-color: #6f42c1;
     box-shadow: 0 0 5px rgba(111, 66, 193, 0.3);
 }
@@ -487,16 +494,22 @@ footer {
     background: rgba(0, 0, 0, 0.4);
     border: none;
     color: white;
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     transition: all 0.2s;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    /* Mejor area táctil para móviles */
+    min-width: 36px;
+    min-height: 36px;
+    padding: 6px;
+    /* Espaciado táctil adicional */
+    touch-action: manipulation;
 }
 
 .pill-btn:hover {
@@ -519,11 +532,25 @@ footer {
     height: 28px;
     outline: none;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    cursor: default;
 }
 
 .pill-input:focus {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 4px;
+}
+
+/* Campos readonly mantienen apariencia normal */
+.pill-input:read-only {
+    color: white;
+    opacity: 1;
+    cursor: default;
+}
+
+.level-input:read-only {
+    color: #495057 !important;
+    opacity: 1;
+    cursor: default;
 }
 
 .multiplier-x {
@@ -569,12 +596,32 @@ footer {
     .balatro-hand-container {
         flex-wrap: wrap;
         min-height: auto;
-        padding: 10px;
+        padding: 12px;
     }
 
     .hand-level {
-        margin-right: 10px;
+        margin-right: 12px;
         margin-bottom: 5px;
+        min-width: 145px;
+        padding: 8px 12px;
+        min-height: 44px;
+        gap: 6px;
+    }
+
+    .level-btn {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        font-size: 16px;
+    }
+
+    .pill-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 20px;
     }
 
     .hand-name-section {
@@ -583,8 +630,9 @@ footer {
     }
 
     .hand-values {
-        margin-right: 10px;
+        margin-right: 12px;
         margin-bottom: 5px;
+        gap: 12px;
     }
 
     .pill-input {

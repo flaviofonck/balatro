@@ -68,7 +68,7 @@ class BalatroPowerCalculator {
                 <div class="hand-level">
                     <button class="level-btn minus" onclick="calculator.adjustLevel('${key}', -1)">-</button>
                     <span class="level-prefix">Nvl.</span>
-                    <input type="number" class="level-input" id="level-${key}" value="1" min="1" max="15">
+                    <input type="number" class="level-input" id="level-${key}" value="1" min="1" max="15" readonly>
                     <button class="level-btn plus" onclick="calculator.adjustLevel('${key}', 1)">+</button>
                 </div>
                 <div class="hand-name-section">
@@ -77,13 +77,13 @@ class BalatroPowerCalculator {
                 <div class="hand-values">
                     <div class="value-pill blue-pill">
                         <button class="pill-btn minus" onclick="calculator.adjustValue('base-${key}', -5)">-</button>
-                        <input type="number" class="pill-input" id="base-${key}" value="${hand.baseValue}" min="0" max="1000">
+                        <input type="number" class="pill-input" id="base-${key}" value="${hand.baseValue}" min="0" max="1000" readonly>
                         <button class="pill-btn plus" onclick="calculator.adjustValue('base-${key}', 5)">+</button>
                     </div>
                     <div class="multiplier-x">×</div>
                     <div class="value-pill red-pill">
                         <button class="pill-btn minus" onclick="calculator.adjustValue('mult-${key}', -0.5)">-</button>
-                        <input type="number" class="pill-input" id="mult-${key}" value="${hand.multiplier}" min="0" max="50" step="0.1">
+                        <input type="number" class="pill-input" id="mult-${key}" value="${hand.multiplier}" min="0" max="50" step="0.1" readonly>
                         <button class="pill-btn plus" onclick="calculator.adjustValue('mult-${key}', 0.5)">+</button>
                     </div>
                 </div>
@@ -94,15 +94,8 @@ class BalatroPowerCalculator {
             </div>
         `;
 
-        // Add event listeners
-        const baseInput = row.querySelector(`#base-${key}`);
-        const multInput = row.querySelector(`#mult-${key}`);
-        const levelInput = row.querySelector(`#level-${key}`);
-
-        baseInput.addEventListener('input', () => this.updateHandCalculation(key));
-        multInput.addEventListener('input', () => this.updateHandCalculation(key));
-        levelInput.addEventListener('input', () => this.updateHandLevel(key));
-
+        // Los campos son readonly, solo se modifican con botones
+        // No necesitamos event listeners para inputs
         return row;
     }
 
@@ -219,7 +212,7 @@ class BalatroPowerCalculator {
                                 </div>
                                 <div class="text-end">
                                     <span class="badge bg-primary fs-6 px-3 py-2">
-                                        #{rank}
+                                        #${rank}
                                     </span>
                                 </div>
                             </div>
